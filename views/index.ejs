@@ -1,0 +1,39 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MY APP</title>
+  </head>
+  <body>
+    <h3>May Node and Express be with you.</h3>
+    <form action="/quotes" method="POST">
+      <%if (quote) { %>
+      <input type="hidden" name="_method" value="PUT" />
+      <input type="hidden" name="_id" value="<%= quote._id %>" />
+      <% } %>
+      <input type="text" placeholder="name" value="<%= quote ? quote.name : '' %>" name="name" />
+      <input type="text" placeholder="quote" value="<%= quote ? quote.quote : '' %>" name="quote" />
+      <button type="submit">Submit</button>
+    </form>
+    <% if(quotes.length) { %>
+    <h2>Quotes</h2>
+    <ul class="quotes">
+      <% for(var i = 0; i < quotes.length; i++) {%>
+      <li class="quote">
+        <form action="/quotes/<%= quotes[i]._id %>" method="POST" style="display: inline">
+          <input type="hidden" name="_method" value="DELETE" />
+          <button type="submit">Delete</button>
+        </form>
+        <a href="/<%= quotes[i]._id %>"><%= quotes[i].name %></a>:
+        <span><%= quotes[i].quote %></span>
+      </li>
+      <% } %>
+    </ul>
+    <% } else { %>
+    <h2><a href="/">Quotes List</a></h2>
+    <% } %>
+    <script src="/main.js"></script>
+  </body>
+</html>
